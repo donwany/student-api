@@ -10,7 +10,7 @@ from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 import certifi
 
-load_dotenv()
+load_dotenv(".env", override=True)
 
 
 app = FastAPI()
