@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-from pymongo import MongoClient
+# from pymongo import MongoClient
 from bson import ObjectId
 import os
 import uvicorn
