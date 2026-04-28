@@ -8,12 +8,12 @@ import uvicorn
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
+import certifi
 
 load_dotenv()
 
 
 app = FastAPI()
-
 
 # ---------------------------
 # Connect to REMOTE MongoDB
@@ -22,7 +22,7 @@ app = FastAPI()
 MONGO_URI = os.getenv("MONGO_URI")
 
 # Create a new client and connect to the server
-client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
+client = MongoClient(MONGO_URI, server_api=ServerApi('1'), tls=True, tlsCAFile=certifi.where())
 
 # Send a ping to confirm a successful connection
 try:
