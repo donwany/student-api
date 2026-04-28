@@ -5,6 +5,8 @@ from pymongo import MongoClient
 from bson import ObjectId
 import os
 
+import uvicorn
+
 app = FastAPI()
 
 # ---------------------------
@@ -120,4 +122,4 @@ def delete_student(student_id: str):
 # Run application
 # ---------------------------
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=int(8000))
+    uvicorn.run(app, host="localhost", port=os.getenv("PORT", 8000))
