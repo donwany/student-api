@@ -1,3 +1,15 @@
+```
+| Method | Endpoint            | Description      |
+| ------ | ------------------- | ---------------- |
+| GET    | `/v1/students`      | Get all students |
+| GET    | `/v1/students/{id}` | Get one student  |
+| POST   | `/v1/students`      | Create student   |
+| PUT    | `/v1/students/{id}` | Update student   |
+| DELETE | `/v1/students/{id}` | Delete student   |
+
+```
+
+
 ```bash
 
 # Insert records
@@ -31,3 +43,16 @@ curl -X DELETE 'http://localhost:8000/v1/students/69f11c84b9ac80396d2807a5' \
 ```
 
 ## Deploy
+```bash
+# build command
+pip install uv && uv sync
+
+# start command
+uv run uvicorn main:app --host 0.0.0.0 --port $PORT
+
+
+# Render environment variable
+MONGO_URL=your_mongodb_atlas_url
+PORT=8000
+
+```

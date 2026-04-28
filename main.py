@@ -3,14 +3,17 @@ from pydantic import BaseModel
 from typing import List
 from pymongo import MongoClient
 from bson import ObjectId
-import uvicorn
+import os
 
 app = FastAPI()
 
 # ---------------------------
 # Connect to local MongoDB
 # ---------------------------
-client = MongoClient("mongodb://127.0.0.1:27017/?directConnection=true")
+
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017/?directConnection=true")
+
+client = MongoClient(MONGO_URI)
 db = client["school_db"]
 students_collection = db["students"]
 
@@ -39,6 +42,17 @@ def student_serializer(student) -> dict:
         "course": student["course"]
     }
 
+
+# ---------------------------
+# Root endpoint
+# ---------------------------
+@app.get("/")
+def root():
+    return {
+        "message": "Welcome to the Student API",
+        "version": "1.0",
+        "docs": "/docs"
+    }
 
 # ---------------------------
 # GET all students
