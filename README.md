@@ -15,12 +15,20 @@
 # Insert records
 curl -X POST http://localhost:8000/v1/students \
 -H "Content-Type: application/json" \
--d '{"name":"Alice","age":23,"course":"AI"}'
+-d '{
+    "name":"Alice",
+    "age":23,
+    "course":"AI"
+}'
 
-
-curl -X POST http://localhost:8000/v1/students \
+# Production
+curl -X POST https://student-api-jie2.onrender.com/v1/students \
 -H "Content-Type: application/json" \
--d '{"name":"Alice","age":23,"course":"AI"}'
+-d '{
+    "name":"Alice",
+    "age":23,
+    "course":"AI"
+}'
 
 # GET Student by ID
 curl -X GET 'http://localhost:8000/v1/students/69f11c84b9ac80396d2807a5' \
