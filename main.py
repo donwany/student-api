@@ -12,7 +12,7 @@ app = FastAPI()
 # "mongodb://127.0.0.1:27017/?directConnection=true"
 # ---------------------------
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://worldboss:W3PCkiI8rxG0M1co@ballotflow.0uvaa.mongodb.net/?retryWrites=true&w=majority")
+MONGO_URI = os.getenv("MONGO_URI")
 
 client = MongoClient(MONGO_URI)
 db = client["school_db"]
