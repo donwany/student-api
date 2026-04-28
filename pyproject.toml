@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "dnspython>=2.8.0",
     "fastapi>=0.136.1",
     "pymongo[srv]>=4.17.0",
+    "python-dotenv>=1.2.2",
     "requests>=2.33.1",
     "uvicorn>=0.46.0",
 ]
