@@ -196,10 +196,3 @@ collection.create_index("name")
 - Always validate input in real applications
 
 ---
-
-## 🚀 Next Steps
-
-You can extend this into:
-- A REST API (Flask or FastAPI)
-- A full student management system
-- MongoDB aggregation (analytics)
