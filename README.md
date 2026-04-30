@@ -65,7 +65,7 @@ uv run uvicorn main:app --host 0.0.0.0 --port $PORT
 
 
 # Render environment variable
-MONGO_URL=your_mongodb_atlas_url
+MONGO_URI=your_mongodb_atlas_url
 PORT=8000
 
 ```

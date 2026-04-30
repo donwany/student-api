@@ -1,28 +1,24 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List
-# from pymongo import MongoClient
-from bson import ObjectId
 import os
 import uvicorn
+from bson import ObjectId
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from dotenv import load_dotenv
-import certifi
 
 load_dotenv(".env", override=True)
-
 
 app = FastAPI()
 
 # ---------------------------
 # Connect to REMOTE MongoDB
-# 
 # ---------------------------
 MONGO_URI = os.getenv("MONGO_URI")
 
 # Create a new client and connect to the server
-client = MongoClient(MONGO_URI, server_api=ServerApi('1'), tls=True, tlsCAFile=certifi.where())
+# tls=True, tlsCAFile=certifi.where()
+client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 
 # Send a ping to confirm a successful connection
 try:
@@ -31,10 +27,8 @@ try:
 except Exception as e:
     print(e)
 
-
 # ---------------------------
 # Connect to local MongoDB
-# 
 # ---------------------------
 
 # MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017/?directConnection=true")
@@ -48,6 +42,7 @@ students_collection = db["students"]
 if "students" not in db.list_collection_names():
     students_collection.insert_one({"init": True})
     students_collection.delete_one({"init": True})
+
 
 # ---------------------------
 # Pydantic Model
@@ -81,6 +76,7 @@ def root():
         "docs": "/docs"
     }
 
+
 # ---------------------------
 # GET all students
 # ---------------------------
@@ -95,7 +91,7 @@ def get_students():
 # ---------------------------
 @app.post("/v1/students")
 def create_student(student: Student):
-    result = students_collection.insert_one(student.dict())
+    result = students_collection.insert_one(student.model_dump())
     new_student = students_collection.find_one({"_id": result.inserted_id})
     return student_serializer(new_student)
 
@@ -107,7 +103,7 @@ def create_student(student: Student):
 def update_student(student_id: str, student: Student):
     result = students_collection.update_one(
         {"_id": ObjectId(student_id)},
-        {"$set": student.dict()}
+        {"$set": student.model_dump()}
     )
 
     if result.modified_count == 0:
@@ -128,6 +124,7 @@ def get_student(student_id: str):
         raise HTTPException(status_code=404, detail="Student not found")
 
     return student_serializer(student)
+
 
 # ---------------------------
 # DELETE student
